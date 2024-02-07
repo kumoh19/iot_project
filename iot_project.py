@@ -116,43 +116,43 @@ def traffic_light():
 
 def detect_and_alert():
     # 초음파 센서와 부저 핀 설정
-ultrasonic_ranger_sidewalk = 4
-ultrasonic_ranger_driveway = 8
-buzzer_pin = 2
-pinMode(buzzer_pin,"OUTPUT")
+    ultrasonic_ranger_sidewalk = 4
+    ultrasonic_ranger_driveway = 8
+    buzzer_pin = 2
+    pinMode(buzzer_pin,"OUTPUT")
 
-sidewalk_detected = False
+    sidewalk_detected = False
 
-while True:
-    try:
-        # 보도와 차도 센서로부터 거리 읽기
-        distance_sidewalk = ultrasonicRead(ultrasonic_ranger_sidewalk)
-        distance_driveway = ultrasonicRead(ultrasonic_ranger_driveway)
+    while True:
+        try:
+            # 보도와 차도 센서로부터 거리 읽기
+            distance_sidewalk = ultrasonicRead(ultrasonic_ranger_sidewalk)
+            distance_driveway = ultrasonicRead(ultrasonic_ranger_driveway)
 
-        print("Sidewalk:", distance_sidewalk, "cm, Driveway:", distance_driveway, "cm")
+            print("Sidewalk:", distance_sidewalk, "cm, Driveway:", distance_driveway, "cm")
 
-        # 보도 센서에 무언가 감지되었는지 확인
-        if distance_sidewalk <= 10:
-            sidewalk_detected = True
+            # 보도 센서에 무언가 감지되었는지 확인
+            if distance_sidewalk <= 10:
+                sidewalk_detected = True
 
-        # 차도 센서에 무언가 감지되고, 이전에 보도 센서에 감지된 경우
-        if sidewalk_detected and distance_driveway <= 10:
-						print("buzzer on")
-            digitalWrite(buzzer_pin, 1)  # 부저 작동
-            time.sleep(1)
-            sidewalk_detected = False  # 상태 초기화
-        else:
+            # 차도 센서에 무언가 감지되고, 이전에 보도 센서에 감지된 경우
+            if sidewalk_detected and distance_driveway <= 10:
+    			print("buzzer on")
+                digitalWrite(buzzer_pin, 1)  # 부저 작동
+                time.sleep(1)
+                sidewalk_detected = False  # 상태 초기화
+            else:
+                digitalWrite(buzzer_pin, 0)
+
+            time.sleep(2)
+
+        except TypeError as e:
             digitalWrite(buzzer_pin, 0)
-
-        time.sleep(2)
-
-    except TypeError as e:
-        digitalWrite(buzzer_pin, 0)
-        print("Error:", e)
-        break
-    except IOError as e:
-        print("Error:", e)
-        break
+            print("Error:", e)
+            break
+        except IOError as e:
+            print("Error:", e)
+            break
 
 thread1 = threading.Thread(target=infrared_remote_control)
 thread2 = threading.Thread(target=beacon_wand)
