@@ -24,3 +24,4 @@
 4. 사람 감지 센서 - 초음파 2개, 부저
 
 ### 4. 결과물 시연
+[![Video Label](http://img.youtube.com/vi/6kYEWIBWowI/0.jpg)](https://youtu.be/6kYEWIBWowI)
